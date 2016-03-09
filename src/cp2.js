@@ -59,7 +59,7 @@ String.prototype.words = function(){
         words.push(strStripped.substring(start, end));
         strStripped = strStripped.slice(end).trim();
     }
-    //its an empty string dont push it into the array
+    //if its an empty string dont push it into the array
     if(strStripped !== '')
       words.push(strStripped);
     return words;
@@ -112,14 +112,3 @@ String.prototype.caseConverter = function(strcase){
   var output = result.join('');
   return output;
 }
-/**
-console.log(process.argv[2].hasVowels());
-console.log(process.argv[2].toUpper());
-console.log('HAbabAA'.toLower());
-console.log('tello people'.ucFirst());
-console.log('hello'.isQuestion());
-console.log('hello people, come and pray with me.'.words());
-console.log('hello people, come and pray with me.'.wordCount());
-console.log('1111000.11888'.toCurrency());
-console.log('1,000,000.11'.fromCurrency());
-**/
