@@ -1,32 +1,3 @@
-if (!Array.prototype.includes) {
-  Array.prototype.includes = function(searchElement /*, fromIndex*/ ) {
-    'use strict';
-    var O = Object(this);
-    var len = parseInt(O.length) || 0;
-    if (len === 0) {
-      return false;
-    }
-    var n = parseInt(arguments[1]) || 0;
-    var k;
-    if (n >= 0) {
-      k = n;
-    } else {
-      k = len + n;
-      if (k < 0) {k = 0;}
-    }
-    var currentElement;
-    while (k < len) {
-      currentElement = O[k];
-      if (searchElement === currentElement ||
-         (searchElement !== searchElement && currentElement !== currentElement)) { // NaN !== NaN
-        return true;
-      }
-      k++;
-    }
-    return false;
-  };
-}
-
 String.prototype.hasVowels = function(){
   var regex = /[aeiou|AEIOU]/ ;
   return regex.test(this);
@@ -91,24 +62,27 @@ String.prototype.insertAt = function(ins, i){
 }
 
 String.prototype.caseConverter = function(strcase){
-  var lower = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-  var upper = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  var result = [], asc;
+  if(strcase == 'upper'){
+    this.split('').forEach(function(e){
+      asc = e.charCodeAt(0);
+      if(asc > 96 && asc < 123){
+        result.push(String.fromCharCode(asc - 32));
+      } else {
+        result.push(e);
+      }
 
-  var result = [];
-  var type = [];
-  this.split('').forEach(function(element){
-    type = (strcase == 'upper') ? lower : upper;
-    oppositeType = (strcase == 'upper') ? upper : lower;
+    });
+  } else {
+    this.split('').forEach(function(e){
+      asc = e.charCodeAt(0);
+      if(asc > 64 && asc < 91){
+        result.push(String.fromCharCode(e.charCodeAt(0) + 32));
+      } else {
+        result.push(e);
+      }
 
-    if(type.includes(element)){
-        result.push(oppositeType[type.indexOf(element)]);
-    } else {
-      result.push(element);
-    }
-  });
-
-  var output = result.join('');
-  return output;
+    });
+  }
+  return result.join('');
 }
